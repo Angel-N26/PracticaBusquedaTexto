@@ -7,7 +7,7 @@ import java.util.ArrayList;
  *
  */
 public class PracticaBusquedaTexto {
-    
+
     //Metodo KarpRabin
     public ArrayList<Integer> KarpRabin(String patron, String texto) {
         ArrayList<Integer> ocurrencias = new ArrayList<Integer>();
@@ -26,7 +26,7 @@ public class PracticaBusquedaTexto {
             }
         }
     }
-    
+
     //Metodo KnuthMorrisPrat
     public ArrayList<Integer> KnuthMorrisPrat(String patron, String texto) {
         ArrayList<Integer> ocurrencias = new ArrayList<Integer>();
@@ -63,7 +63,6 @@ public class PracticaBusquedaTexto {
         return fallo;
     }
 
-    
     private ArrayList<Integer> KnuthMorrisPrat(String patron, String texto, int[] fallo) {
         ArrayList<Integer> pos = new ArrayList<Integer>();
         int t = 0;
@@ -85,5 +84,88 @@ public class PracticaBusquedaTexto {
             }
         }
         return pos;
+    }
+    
+    //Metodo ShiftOr
+    public ArrayList<Integer> ShiftOr(String patron, String texto) {
+        ArrayList<Integer> ocurrencias = new ArrayList<Integer>();
+        if (patron.length() > 0 && texto.length() >= patron.length()) {
+            String patronInvertido = invertir(patron);
+            ArrayList<Character> alfabeto = new ArrayList<Character>();
+            //guardada los caracteres para localizarlos en alfabetoPatron
+            ArrayList<int[]> alfabetoPatron = new ArrayList<int[]>();//lista de bits de caracteres
+            bitsPatron(patronInvertido, alfabeto, alfabetoPatron);//preproceso
+            ocurrencias = ShiftOr(patron, texto, alfabeto, alfabetoPatron);
+        }
+        return ocurrencias;
+    }
+
+    public String invertir(String patron) {
+        String inv = "";
+        for (int n = patron.length() - 1; n >= 0; n--) {
+            inv = inv + patron.charAt(n);
+        }
+        return inv;
+    }
+
+    private void bitsPatron(String inv, ArrayList<Character> alfabeto, ArrayList<int[]> alfabetoPatron) {
+    //saca la lista de los bits de los caracteres. Preproceso
+        for (int n = 0; n < inv.length(); n++) {
+            if (!alfabeto.contains(inv.charAt(n))) {
+                alfabeto.add(inv.charAt(n));
+                int[] bits = new int[inv.length()];
+                for (int p = 0; p < inv.length(); p++) {
+                    if (inv.charAt(p) == inv.charAt(n)) {
+                        bits[p] = 0;
+                    } else {
+                        bits[p] = 1;
+                    }
+                }
+                alfabetoPatron.add(bits);
+            }
+        }
+    }
+
+    public ArrayList<Integer> ShiftOr(String patron, String texto, ArrayList<Character> alfabeto, ArrayList<int[]> alfabetoPatron) {
+        ArrayList<Integer> ocurrencias = new ArrayList<Integer>();
+        int[] estado = new int[patron.length()];
+        for (int e = 0; e < estado.length; e++) {
+            estado[e] = 1;
+        }
+        Boolean coincide = false;
+        for (int n = 0; n < texto.length(); n++) {
+            coincide = OR(texto.charAt(n), estado, coincide, alfabeto, alfabetoPatron);
+            if (estado[0] == 0) {
+                ocurrencias.add(n - patron.length() + 1);
+            }
+        }
+        return ocurrencias;
+    }
+
+    private boolean OR(char c, int[] estado, Boolean coincide, ArrayList<Character> alfabeto, ArrayList<int[]> alfabetoPatron) {
+        if (coincide) { //desplazamiento a la izqda y cero a la dcha
+            for (int n = 0; n < estado.length - 1; n++) {
+                estado[n] = estado[n + 1];
+            }
+        }
+        estado[estado.length - 1] = 0;
+        int[] aux = new int[estado.length];
+        if (alfabeto.contains(c)) {
+            aux = alfabetoPatron.get(alfabeto.indexOf(c));
+            coincide = true;
+        } else {
+            for (int n = 0; n < aux.length; n++) {
+                aux[n] = 1;
+            }
+            coincide = false;
+        }
+        for (int n = 0; n < aux.length; n++) {
+            if (aux[n] == 0 && estado[n] == 0) {
+                estado[n] = 0;
+            } else {
+                estado[n] = 1;
+            }
+        }
+        return coincide;
     }
 }
