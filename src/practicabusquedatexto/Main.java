@@ -10,13 +10,24 @@ import utilidades.leer;
  */
 public class Main {
 
-    public static void main(String[] args) throws IOException{
-        busqueda();
+    public static void main(String[] args) throws IOException, Exception{
+        leer.pln(creacionTextoAleatorio());
+        //busqueda();
     }
     public static String creacionTexto() throws IOException{
         String archivo = "quijote1.txt";
         lecturaFicheros f = new lecturaFicheros();
         String texto = f.crearTexto(archivo);
+        return texto;
+    }
+     public static String creacionTextoAleatorio() throws IOException{
+        String archivo = "quijote1.txt";
+        lecturaFicheros f = new lecturaFicheros();
+        int lineas=f.leerLineas(archivo);
+        double lineasDeseadas=leer.entero("Indique el porcentaje que desea leer:\n",0,100);
+        lineasDeseadas=lineasDeseadas/100;
+        double porcentaje=(lineas*lineasDeseadas);
+        String texto = f.crearTextoAleatoria(archivo,porcentaje);
         return texto;
     }
     public static void busqueda() throws IOException{

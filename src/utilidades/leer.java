@@ -41,7 +41,7 @@ public class leer{
 	}
 
 
-	public static int entero(String s, int min, int max)throws Exception{
+	public static int entero(String s, int min, int max){
 		int res;
 		do{
 			res=entero(s+" ["+min+","+max+"]");
