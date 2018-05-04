@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 /**
  * @author Angel Loro, Angel Sánchez
- *
- */
+ **/
+
 public class PracticaBusquedaTexto {
 
     //Metodo KarpRabin

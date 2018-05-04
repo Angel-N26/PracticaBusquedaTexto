@@ -5,14 +5,13 @@ import java.util.ArrayList;
 import utilidades.leer;
 
 /**
- * @author Angel
- *
- */
+ * @author Angel Loro, Angel Sánchez
+ **/
+
 public class Main {
 
-    public static void main(String[] args) throws IOException, Exception{
-        leer.pln(creacionTextoAleatorio());
-        //busqueda();
+    public static void main(String[] args) throws IOException, Exception{        
+        busqueda();
     }
     public static String creacionTexto() throws IOException{
         String archivo = "quijote1.txt";
@@ -20,18 +19,20 @@ public class Main {
         String texto = f.crearTexto(archivo);
         return texto;
     }
-     public static String creacionTextoAleatorio() throws IOException{
+    
+    public static String creacionTextoAleatorio() throws IOException{
         String archivo = "quijote1.txt";
         lecturaFicheros f = new lecturaFicheros();
         int lineas=f.leerLineas(archivo);
         double lineasDeseadas=leer.entero("Indique el porcentaje que desea leer:\n",0,100);
         lineasDeseadas=lineasDeseadas/100;
-        double porcentaje=(lineas*lineasDeseadas);
-        String texto = f.crearTextoAleatoria(archivo,porcentaje);
+        double porcentaje=(lineas*lineasDeseadas);        
+        String texto = f.crearTextoAleatoria(archivo,lineas,f.lineasLeer(lineas, (int)porcentaje));
         return texto;
     }
+     
     public static void busqueda() throws IOException{
-        String texto= creacionTexto();
+        String texto= creacionTextoAleatorio();
         String patron = leer.cadena("Introduzca el patron a buscar:\n");
         Boolean seguir=true;
         PracticaBusquedaTexto p = new PracticaBusquedaTexto();
