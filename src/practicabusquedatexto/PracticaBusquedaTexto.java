@@ -10,7 +10,7 @@ public class PracticaBusquedaTexto {
 
     //Metodo KarpRabin
     public ArrayList<Integer> KarpRabin(String patron, String texto) {
-        ArrayList<Integer> ocurrencias = new ArrayList<Integer>();
+        ArrayList<Integer> ocurrencias = new ArrayList<>();
         if (patron.length() > 0 && texto.length() >= patron.length()) {
             KarpRabin(patron, texto, ocurrencias);
         }

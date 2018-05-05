@@ -6,24 +6,10 @@ package practicabusquedatexto;
 
 import java.io.*;
 import java.util.ArrayList;
-import utilidades.leer;
 
 public class lecturaFicheros {
-
-    public String crearTexto(String archivo) throws FileNotFoundException, IOException {
-        String cadena;
-        String texto = "";
-        FileReader f = new FileReader(archivo);
-        try (BufferedReader b = new BufferedReader(f)) {
-            while ((cadena = b.readLine()) != null) {
-                texto += cadena;
-                texto += "\n";
-            }
-        }
-        return texto;
-    }
-
-    public String crearTextoAleatoria(String archivo, int lineasTotales, ArrayList<Integer> lineasLeer) throws FileNotFoundException, IOException {
+    
+    public String crearTexto(String archivo, int lineasTotales, ArrayList<Integer> lineasLeer) throws FileNotFoundException, IOException {
         String cadena;
         String texto = "";
         FileReader f = new FileReader(archivo);
@@ -53,8 +39,7 @@ public class lecturaFicheros {
 
     public ArrayList lineasLeer(int numLineas, int lineasPorcentaje) { //Metodo para coger las lineas que vamos a leer
         ArrayList<Integer> lineasLeer = new ArrayList<>();
-        int cont = 0;
-        leer.pln("Lineas: " + numLineas + "Lineas deseadas: " + lineasPorcentaje);
+        int cont = 0;        
         while (cont < lineasPorcentaje) {
             int numero = (int) (Math.random() * numLineas);
             if (!lineasLeer.contains(numero)) {
