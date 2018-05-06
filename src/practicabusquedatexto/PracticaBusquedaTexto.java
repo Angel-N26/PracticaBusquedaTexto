@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 /**
  * @author Angel Loro, Angel Sánchez
- **/
-
+ *
+ */
 public class PracticaBusquedaTexto {
 
     //Metodo KarpRabin
@@ -85,7 +85,7 @@ public class PracticaBusquedaTexto {
         }
         return pos;
     }
-    
+
     //Metodo ShiftOr
     public ArrayList<Integer> ShiftOr(String patron, String texto) {
         ArrayList<Integer> ocurrencias = new ArrayList<Integer>();
@@ -109,7 +109,7 @@ public class PracticaBusquedaTexto {
     }
 
     private void bitsPatron(String inv, ArrayList<Character> alfabeto, ArrayList<int[]> alfabetoPatron) {
-    //saca la lista de los bits de los caracteres. Preproceso
+        //saca la lista de los bits de los caracteres. Preproceso
         for (int n = 0; n < inv.length(); n++) {
             if (!alfabeto.contains(inv.charAt(n))) {
                 alfabeto.add(inv.charAt(n));
@@ -168,7 +168,8 @@ public class PracticaBusquedaTexto {
         }
         return coincide;
     }
-     //Metodo BoyerMoore
+    //Metodo BoyerMoore
+
     private static void boyerMoore(String patron, String texto, int[] s, ArrayList<Integer> ocurrencias, ArrayList<Character> occChar, ArrayList<Integer> occPos) {
         int i = 0, j;
         while (i <= texto.length() - patron.length()) {
@@ -246,4 +247,30 @@ public class PracticaBusquedaTexto {
             }
         }
     }
+
+    //Metod Naive
+    public ArrayList<Integer> Naive(String patron, String texto) {
+        ArrayList<Integer> ocurrencias = new ArrayList<Integer>();//posicion de las coincidencias
+        if (patron.length() > 0 && texto.length() >= patron.length()) {
+            int t = 0;//desplazamiento en el texto
+            int p = 0;//desplazamiento en el patron
+            while (texto.length() - t >= patron.length()) {
+                if (texto.charAt(t) == patron.charAt(p)) {//busqueda
+                    int T = t + 1;
+                    int P = 1;
+                    while (P < patron.length() && texto.charAt(T) == patron.charAt(P)) {
+                        T++;
+                        P++;
+                    }
+                    if (P == patron.length()) {
+                        ocurrencias.add(t);
+                    }
+                }
+                t++;
+            }
+        }
+        return ocurrencias;
+    }
+
+    
 }

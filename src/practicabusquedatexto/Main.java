@@ -40,7 +40,7 @@ public class Main {
         ArrayList<Integer> ocurrencias;
         long time_start,tiempo_CPi;
         do {
-            switch (leer.entero("Indica la opcion que desea realizar:\n\t1)Shift Or\n\t2)Karp Rabin\n\t3)Knuth Morris Prat\n\t4)Boyer Moore\n\t5)Cambiar patron\n\t6)Salir\n")) {
+            switch (leer.entero("Indica la opcion que desea realizar:\n\t1)Shift Or\n\t2)Karp Rabin\n\t3)Knuth Morris Prat\n\t4)Boyer Moore\n\t5)Naive\n\t6)Cambiar patron\n\t7)Salir\n")) {
                 case 1:
                     time_start = System.nanoTime();
                     ocurrencias = p.ShiftOr(patron, texto);
@@ -74,9 +74,17 @@ public class Main {
                     leer.pln("Ha tardado " + tiempo_CPi + " nanosegundos");
                     break;
                 case 5:
-                    patron = leer.cadena("Introduzca el patron a buscar:\n");
+                    time_start = System.nanoTime();
+                    ocurrencias = p.Naive(patron, texto);
+                    tiempo_CPi = System.nanoTime() - time_start;
+                    leer.pln("Numero de ocurrencias: " + ocurrencias.size());
+                    leer.pln("Posiciones de las ocurrencias: " + ocurrencias);
+                    leer.pln("Ha tardado " + tiempo_CPi + " nanosegundos");
                     break;
                 case 6:
+                    patron = leer.cadena("Introduzca el patron a buscar:\n");
+                    break;
+                case 7:
                     seguir = false;
                     break;
                 default:
