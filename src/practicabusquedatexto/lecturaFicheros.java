@@ -9,24 +9,41 @@ import java.util.ArrayList;
 
 public class lecturaFicheros {
     
-    public String crearTexto(String archivo, int lineasTotales, ArrayList<Integer> lineasLeer) throws FileNotFoundException, IOException {
+    public String crearTexto(String archivo, ArrayList<Integer> lineasLeer) throws FileNotFoundException, IOException {
         String cadena;
         String texto = "";
         FileReader f = new FileReader(archivo);
+        int contador=1;
         try (BufferedReader b = new BufferedReader(f)) {
-            for (int i = 0; i < lineasTotales; i++) {
-                if ((cadena = b.readLine()) != null) {
-                    if (lineasLeer.contains(i)) {
+                while ((cadena = b.readLine()) != null) {
+                    if (lineasLeer.contains(contador)) {
                         texto += cadena;
                         texto += "\n";
                     }
+                    contador++;
+                    if (contador==10){
+                        contador=1;
+                    }
                 }
-            }
-        }
+            b.close();
+        }   catch(Exception e){
+                    e.printStackTrace();
+                        }  
         return texto;
     }
+    public ArrayList<Integer> lineasLeer (int porcentaje) {
+		int linea;
+		ArrayList <Integer> lineas_random = new ArrayList<Integer> ();
+		for (int i = 0; i < porcentaje; i++) {
+			do {
+				linea = (int) (Math.random()*10)+1;
+			} while (lineas_random.contains(linea));
+			lineas_random.add(linea);
+		}
+		return lineas_random;
+	}
 
-    public Integer leerLineas(String archivo) throws FileNotFoundException, IOException {
+   /* public Integer leerLineas(String archivo) throws FileNotFoundException, IOException {
         int lineas = 0;
         FileReader f = new FileReader(archivo);
         try (BufferedReader b = new BufferedReader(f)) {
@@ -35,9 +52,9 @@ public class lecturaFicheros {
             }
         }
         return lineas;
-    }
+    }*/
 
-    public ArrayList lineasLeer(int numLineas, int lineasPorcentaje) { //Metodo para coger las lineas que vamos a leer
+   /* public ArrayList lineasLeer(int numLineas, int lineasPorcentaje) { //Metodo para coger las lineas que vamos a leer
         ArrayList<Integer> lineasLeer = new ArrayList<>();
         int cont = 0;        
         while (cont < lineasPorcentaje) {
@@ -49,7 +66,7 @@ public class lecturaFicheros {
         }
         lineasLeer.sort((o1, o2) -> o1.compareTo(o2));
         return lineasLeer;
-    }
+    }*/
     
     /*public String crearTextoAleatoria(String archivo, double porcentaje) throws FileNotFoundException, IOException {
         String cadena;

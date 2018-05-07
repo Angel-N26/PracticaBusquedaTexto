@@ -16,24 +16,21 @@ public class Main {
 
     public static String creacionTexto() throws IOException {
         String archivo = "quijote1.txt", texto;
-        int lineas;
-        double lineasDeseadas, porcentaje;
+        int lineasDeseadas;
         lecturaFicheros f = new lecturaFicheros();
 
-        lineas = f.leerLineas(archivo);
+        //lineas = f.leerLineas(archivo);
         lineasDeseadas = leer.entero("Indique el porcentaje que desea leer:\n", 0, 100);
-
-        lineasDeseadas = lineasDeseadas / 100;
-        porcentaje = (lineas * lineasDeseadas);
-
-        leer.pln("Lineas totales: " + lineas + "\nLineas deseadas: " + (int) porcentaje);
-
-        texto = f.crearTexto(archivo, lineas, f.lineasLeer(lineas, (int) porcentaje));
+        //Dividimos el porcentaje entre 10 que son los ratios de lineas que haremos
+        lineasDeseadas=lineasDeseadas/10;
+        ArrayList<Integer> lineasLeer=f.lineasLeer(lineasDeseadas);
+        texto = f.crearTexto(archivo,lineasLeer);
         return texto;
     }
 
     public static void busqueda() throws IOException {
         String texto = creacionTexto();
+        leer.pln(texto);
         String patron = leer.cadena("Introduzca el patron a buscar:\n");
         Boolean seguir = true;
         PracticaBusquedaTexto p = new PracticaBusquedaTexto();
